@@ -39,6 +39,49 @@ app.post('/items', async (req, res) => {
         res.status(500).json({ message: 'An error occurred' });
     }
 }); 
+
+app.get('/items', async (req, res) => {
+    try {
+        const items = await Item.find();
+        res.json(items);
+    } catch (error) {
+        console.error('error', error);
+        res.status(500).json({ message: 'An error occurred' });
+    }
+});
+
+
+app.delete('/items/:id', async (req, res) => {
+    try {
+        const items = await Item.findByIdAndDelete(req.params.id);
+        res.json("Item deleted");
+    } catch (error) {
+        console.error('error', error);
+        res.status(500).json({ message: 'An error occurred' });
+    }
+});
+
+app.put('/items/:id', async (req, res) => {
+    const item = {
+        name: req.body.name,
+        description: req.body.description,
+        phone_number: req.body.phone_number
+    };
+    try {
+        const response = await axios.get(`http://localhost:3000/validate/${item.phone_number}`);
+        if(response.data.valid){
+            const itemSchema = await Item.findByIdAndUpdate(req.params.id, item);
+            res.json("Item updated");
+        } else {
+            res.status(500).json({ message: 'Invalid Number' });
+        }
+    } catch (error) {
+        console.error('error', error);
+        res.status(500).json({ message: 'An error occurred' });
+    }
+});
+
+
     
 
 
