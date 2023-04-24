@@ -84,10 +84,15 @@ app.put('/items/:id', async (req, res) => {
 });
 
 
-    
-
-
-app.listen(port, () => {
-    console.log(`Mobile validation service listening at http://localhost:${port}`);
-  });
+function listen(port, callback) {
+    app.listen(port, callback);
+  }
+  
+module.exports = { app, listen };
+  
+if (require.main === module) {
+    listen(port, () => {
+      console.log(`Mobile validation service listening at http://localhost:${port}`);
+    });
+  }
   
