@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const app = express();
 app.use(express.json());
 const Item = require('./itemModel');
+const cors = require('cors');
+app.use(cors());
 const port = 4000;
 
 //connect to DB
@@ -32,7 +34,7 @@ app.post('/items', async (req, res) => {
             await newItem.save();
             res.json(newItem);
         } else {
-            res.status(500).json({ message: 'Invalid Number' });
+            res.json({ message: 'Invalid Number' });
         }
     } catch (error) {
         console.error('error', error);
