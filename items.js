@@ -70,16 +70,6 @@ app.get('/categories', async (req, res) => {
 
 
 
-app.delete('/categories/:id', async (req, res) => {
-    try {
-        const categories = await Category.findByIdAndDelete(req.params.id);
-        res.json("Category deleted");
-    } catch (error) {
-        console.error('error', error);
-        res.status(500).json({ message: 'An error occurred' });
-    }
-});
-
 //Item routes
 
 app.post('/items', async (req, res) => {
