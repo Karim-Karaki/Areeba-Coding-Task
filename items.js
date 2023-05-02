@@ -48,10 +48,11 @@ app.post('/categories', async (req, res) => {
         name: req.body.name
     };
     try {
-
         const newCategory = new Category(category); 
         const test = await newCategory.save();
-        res.json(newCategory);
+        //resolve the promise
+        
+        res.status(200).json(test);
     } catch (error) {
         console.error('error', error);  
         res.status(500).json({ message: 'An error occurred' });
